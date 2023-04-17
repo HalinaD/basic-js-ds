@@ -17,15 +17,14 @@ class Node {
 
 class BinarySearchTree {
 constructor(){
-  this.root = null
+  this.aroot = null
 }
   root() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.aroot ? this.aroot : null;
   }
 
   add(value) {
-    this.root = addWithin(this.root, value);
+    this.aroot = addWithin(this.aroot, value);
 
     function addWithin(node, value) {
       if (!node) {
@@ -36,10 +35,10 @@ constructor(){
         return node;
       }
 
-      if (value < node.value) {
-        node.left = addWithin(node.left, value);
-      } else {
+      if (value > node.value) {
         node.right = addWithin(node.right, value);
+      } else {
+        node.left = addWithin(node.left, value);  
       }
 
       return node;
@@ -47,7 +46,7 @@ constructor(){
   }
 
   has(value) {
-    return searchWithin(this.root, value);
+    return searchWithin(this.aroot, value);
 
     function searchWithin(node, value) {
       if (!node) {
@@ -64,13 +63,28 @@ constructor(){
     }
   }
 
-  find( data ) {
-    throw new NotImplementedError('Not implemented');
+  find( value ) {
+    return findElem(this.aroot, value);
+
+    function findElem(node, value) {
+      if (!node) {
+        return null;
+      }
+
+      if (node.value === value) {
+        return node;
+      }
+
+      return value < node.value?
+       findElem(node.left, value):
+      findElem(node.right, value);
+      
+    }
     
   }
 
   remove(value) {
-    this.root = removeNode(this.root, value);
+    this.aroot = removeNode(this.aroot, value);
 
     function removeNode(node, value) {
       if (!node) {
@@ -118,11 +132,11 @@ constructor(){
   }
 
   min() {
-    if (!this.root) {
+    if (!this.aroot) {
       return;
     }
 
-    let node = this.root;
+    let node = this.aroot;
     while (node.left) {
       node = node.left;
     }
@@ -131,11 +145,11 @@ constructor(){
   }
 
   max() {
-    if (!this.root) {
+    if (!this.aroot) {
       return;
     }
 
-    let node = this.root;
+    let node = this.aroot;
     while (node.right) {
       node = node.right;
     }
